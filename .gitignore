@@ -1,0 +1,7 @@
+.vscode
+env
+*.c
+*.pyd
+*.html
+build
+*.pyc
