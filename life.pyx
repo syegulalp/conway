@@ -17,9 +17,13 @@ DEF HEIGHT = 300
 
 cdef int[WIDTH * HEIGHT * 9] lookup
 
+cdef array.array green = array.array("B", b'\x00\xff\x00\xff')
+cdef array.array black = array.array("B", b'\x00\x00\x00\xff')
+
+
+
 def init():
     global lookup
-    # index = 0
     cdef size_t index = 0
     cdef signed int y,x,y3,x3
 
@@ -65,11 +69,10 @@ def generation(self)->None:
     for xa in range(0, WIDTH*HEIGHT):
         total = 0
         for y in range(0,9):
-            total +=1 if w[lookup[index]] != 0 else 0
+            total += w[lookup[index]]
             index +=1
         wt = w[xa]
-        if wt!=0:
-            total -=1
+        total -=wt
         w2[xa] = (1<total<4) if wt!=0 else (total==3)
 
     self.world = not self.world
@@ -79,16 +82,13 @@ def render(self)->None:
     cdef array.array[unsigned char] _imagebuffer = self.buffer
     cdef size_t j = 0
     cdef size_t i, t
-
-    world = _world.data.as_uchars
-    imagebuffer = _imagebuffer.data.as_uchars
     cdef unsigned char t1 = 0
-
-    cdef array.array green = array.array("B", b'\x00\xff\x00\xff')
-    cdef array.array black = array.array("B", b'\x00\x00\x00\xff')
 
     g2 = green.data.as_uchars
     b2 = black.data.as_uchars
+
+    world = _world.data.as_uchars
+    imagebuffer = _imagebuffer.data.as_uchars    
 
     for i in range(0, WIDTH*HEIGHT*4, 4):
         t1 = world[j]
