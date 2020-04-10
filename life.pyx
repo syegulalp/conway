@@ -83,6 +83,7 @@ def render(self)->None:
     cdef size_t j = 0
     cdef size_t i, t
     cdef unsigned char t1 = 0
+    cdef unsigned char[4] color
 
     g2 = green.data.as_uchars
     b2 = black.data.as_uchars
@@ -90,8 +91,8 @@ def render(self)->None:
     world = _world.data.as_uchars
     imagebuffer = _imagebuffer.data.as_uchars    
 
-    for i in range(0, WIDTH*HEIGHT*4, 4):
-        t1 = world[j]
+    for i in range(0, WIDTH*HEIGHT*4, 4):        
+        color = g2 if world[j] else b2
         for t in range(0,4):
-            imagebuffer[i+t] = g2[t] if t1 else b2[t]
+            imagebuffer[i+t] = color[t]
         j += 1    
