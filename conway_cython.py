@@ -27,18 +27,22 @@ class MyWindow(pyglet.window.Window):
         init()
         randomize(self)
 
-        self.timer = Timer()
+        self.life_timer = Timer()
+        self.display_timer = Timer()
 
         pyglet.clock.schedule_interval(self.run, 1/60)
         pyglet.clock.schedule_interval(self.get_avg, 1.0)
+        
+        print ("New generation / Display rendering")
 
     def get_avg(self, *a):
-        print(self.timer.avg)
+        print(self.life_timer.avg, self.display_timer.avg)        
 
     def run(self, *a):
-        with self.timer:
+        with self.life_timer:
             generation(self)
-        render(self)        
+        with self.display_timer:
+            render(self)        
         self.texture.blit_into(
             pyglet.image.ImageData(WIDTH, HEIGHT, "RGBA", self.buffer.tobytes()), 0, 0, 0
         )

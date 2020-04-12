@@ -20,8 +20,6 @@ cdef int[WIDTH * HEIGHT * 9] lookup
 cdef array.array green = array.array("B", b'\x00\xff\x00\xff')
 cdef array.array black = array.array("B", b'\x00\x00\x00\xff')
 
-
-
 def init():
     global lookup
     cdef size_t index = 0
@@ -82,7 +80,6 @@ def render(self)->None:
     cdef array.array[unsigned char] _imagebuffer = self.buffer
     cdef size_t j = 0
     cdef size_t i, t
-    cdef unsigned char t1 = 0
     cdef unsigned char[4] color
 
     g2 = green.data.as_uchars
