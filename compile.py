@@ -23,5 +23,5 @@ ext_modules = [
 
 setup(
     name="funcs",
-    ext_modules=cythonize(["life.pyx"], annotate=True),
+    ext_modules=cythonize(ext_modules, annotate=True)
 )
