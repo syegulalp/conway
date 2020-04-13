@@ -15,7 +15,7 @@ import cython
 DEF WIDTH = 400
 DEF HEIGHT = 300
 
-cdef int[WIDTH * HEIGHT * 9] lookup
+cdef signed int[WIDTH * HEIGHT * 9] lookup
 
 cdef array.array green = array.array("B", b'\x00\xff\x00\xff')
 cdef array.array black = array.array("B", b'\x00\x00\x00\xff')
@@ -52,12 +52,10 @@ def randomize(self)->None:
 
 def generation(self)->None:
 
-    cdef unsigned char total, wt
-    cdef size_t index = 0
+    cdef int total, wt, y
+    cdef size_t index = 0, xa
     cdef array.array[unsigned char] _w = self.life[self.world]
     cdef array.array[unsigned char] _w2 = self.life[1 - self.world]
-    cdef signed int yy, xx, y3, x3, y, x
-    cdef size_t xa
 
     global lookup
 
@@ -78,8 +76,7 @@ def generation(self)->None:
 def render(self)->None:
     cdef array.array[unsigned char] _world = self.life[self.world]
     cdef array.array[unsigned char] _imagebuffer = self.buffer
-    cdef size_t j = 0
-    cdef size_t i, t
+    cdef size_t j = 0, i, t
     cdef unsigned char[4] color
 
     g2 = green.data.as_uchars
