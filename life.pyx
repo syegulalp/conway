@@ -17,8 +17,8 @@ DEF HEIGHT = 300
 
 cdef signed int[WIDTH * HEIGHT * 9] lookup
 
-cdef array.array green = array.array("B", b'\x00\xff\x00\xff')
-cdef array.array black = array.array("B", b'\x00\x00\x00\xff')
+cdef unsigned char[4] green = [0,255,0,255]
+cdef unsigned char[4] black = [0,0,0,255]
 
 def init():
     global lookup
@@ -73,20 +73,21 @@ def generation(self)->None:
 
     self.world = not self.world
 
+
 def render(self)->None:
     cdef array.array[unsigned char] _world = self.life[self.world]
     cdef array.array[unsigned char] _imagebuffer = self.buffer
     cdef size_t j = 0, i, t
     cdef unsigned char[4] color
 
-    g2 = green.data.as_uchars
-    b2 = black.data.as_uchars
-
     world = _world.data.as_uchars
     imagebuffer = _imagebuffer.data.as_uchars    
 
     for i in range(0, WIDTH*HEIGHT*4, 4):        
-        color = g2 if world[j] else b2
+        if world[j]:
+            color = green
+        else:
+            color = black
         for t in range(0,4):
             imagebuffer[i+t] = color[t]
         j += 1    
