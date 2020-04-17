@@ -48,13 +48,17 @@ class MyWindow(pyglet.window.Window):
 
         self.randomize()
 
-        self.timer = Timer()
+        self.life_timer = Timer()
+        self.render_timer = Timer()
+        self.draw_timer = Timer()
 
         pyglet.clock.schedule_interval(self.run, 1 / 60)
         pyglet.clock.schedule_interval(self.get_avg, 1.0)
 
+        print ("New generation / Display rendering / Draw")
+
     def get_avg(self, *a):
-        print(self.timer.avg)
+        print(self.life_timer.avg, self.render_timer.avg, self.draw_timer.avg)
 
     def randomize(self):
         """
@@ -108,14 +112,16 @@ class MyWindow(pyglet.window.Window):
         )
 
     def run(self, *a):
-        with self.timer:
+        with self.life_timer:
             self.generation()
-        self.render()
+        with self.render_timer:
+            self.render()
 
     def on_draw(self):
-        pyglet.gl.glViewport(0, 0, 400 * 9, 300 * 9)
-        self.clear()
-        self.batch.draw()
+        with self.draw_timer:
+            pyglet.gl.glViewport(0, 0, 400 * 9, 300 * 9)
+            self.clear()
+            self.batch.draw()
 
 
 if __name__ == "__main__":

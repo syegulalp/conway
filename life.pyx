@@ -16,9 +16,7 @@ DEF WIDTH = 400
 DEF HEIGHT = 300
 
 cdef signed int[WIDTH * HEIGHT * 9] lookup
-
-cdef unsigned char[4] green = [0,255,0,255]
-cdef unsigned char[4] black = [0,0,0,255]
+cdef unsigned char[2][4] colors = [[0,0,0,255],[0,255,0,255]]
 
 def init():
     global lookup
@@ -42,13 +40,13 @@ def init():
 
 def randomize(self)->None:
     cdef array.array[unsigned char] _world = self.life[self.world]
-    world = _world.data.as_uchars
-    cdef int y,x
+    cdef int x
 
-    for y in range(0,HEIGHT):
-        for x in range(0, WIDTH):
-            if rand() % 10 == 1:
-                world[(y*WIDTH)+x]=1
+    world = _world.data.as_uchars    
+
+    for x in range(0, HEIGHT*WIDTH):
+        if rand() % 10 == 1:
+            world[x]=1
 
 def generation(self)->None:
 
@@ -75,19 +73,17 @@ def generation(self)->None:
 
 
 def render(self)->None:
+
     cdef array.array[unsigned char] _world = self.life[self.world]
     cdef array.array[unsigned char] _imagebuffer = self.buffer
     cdef size_t j = 0, i, t
-    cdef unsigned char[4] color
+    cdef int t1
 
     world = _world.data.as_uchars
     imagebuffer = _imagebuffer.data.as_uchars    
 
     for i in range(0, WIDTH*HEIGHT*4, 4):        
-        if world[j]:
-            color = green
-        else:
-            color = black
+        t1 = world[j]
         for t in range(0,4):
-            imagebuffer[i+t] = color[t]
-        j += 1    
+            imagebuffer[i+t] = colors[t1][t]
+        j += 1
