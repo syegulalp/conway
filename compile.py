@@ -22,6 +22,6 @@ ext_modules = [
 ]
 
 setup(
-    name="funcs",
+    name="life",
     ext_modules=cythonize(ext_modules, annotate=True)
 )
