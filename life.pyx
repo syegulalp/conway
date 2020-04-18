@@ -40,7 +40,7 @@ def init():
 
 def randomize(self)->None:
     cdef array.array[unsigned char] _world = self.life[self.world]
-    cdef int x
+    cdef size_t x
 
     world = _world.data.as_uchars    
 

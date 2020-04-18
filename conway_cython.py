@@ -1,10 +1,11 @@
 import pyglet
+pyglet.options["debug_gl"] = False
+pyglet.image.Texture.default_mag_filter = pyglet.gl.GL_NEAREST
+
 import array
 import random
 
 from timer import Timer
-
-pyglet.image.Texture.default_mag_filter = pyglet.gl.GL_NEAREST
 
 WIDTH = 400
 HEIGHT = 300
@@ -33,7 +34,7 @@ class MyWindow(pyglet.window.Window):
 
         pyglet.clock.schedule_interval(self.run, 1/60)
         pyglet.clock.schedule_interval(self.get_avg, 1.0)
-        
+                
         print ("New generation / Display rendering / Draw")
 
     def get_avg(self, *a):
