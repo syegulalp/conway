@@ -1,2 +1,2 @@
-Cython==3.0a4
+Cython==3.0a5
 pyglet==1.5.5
