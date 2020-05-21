@@ -6,3 +6,4 @@ env
 build
 *.pyc
 .mypy_cache
+output*.*

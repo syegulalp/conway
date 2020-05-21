@@ -5,7 +5,7 @@ from setuptools import setup
 from setuptools import Extension
 from Cython.Build import cythonize
 
-import glob, shutil, os
+import glob, os
 
 for ff in ('*.c', '*.html','*.pyd'):
     for f in glob.glob(ff):

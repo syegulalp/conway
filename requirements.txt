@@ -1,2 +1,2 @@
-Cython==0.29.16
-pyglet==1.5.2
+Cython==3.0a4
+pyglet==1.5.5
