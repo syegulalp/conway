@@ -15,7 +15,7 @@ import cython
 DEF WIDTH = 400
 DEF HEIGHT = 300
 
-cdef signed int[WIDTH * HEIGHT * 9] lookup
+cdef signed int[WIDTH * HEIGHT * 8] lookup
 cdef unsigned char[2][4] colors = [[0,0,0,255],[0,255,0,255]]
 
 def init():
@@ -35,6 +35,8 @@ def init():
                         x3=WIDTH-1
                     elif x3>WIDTH-1:
                         x3=0
+                    if x3 == x and y3 == y:
+                        continue
                     lookup[index] = (y3 * WIDTH) + x3
                     index+=1
 
@@ -62,12 +64,13 @@ def generation(self)->None:
 
     for xa in range(0, WIDTH*HEIGHT):
         total = 0
-        for y in range(0,9):
+        for y in range(0,8):
             total += w[lookup[index]]
             index +=1
-        wt = w[xa]
-        total -=wt
-        w2[xa] = (1<total<4) if wt!=0 else (total==3)
+        if w[xa]!=0:
+            w2[xa] = (1<total<4)
+        else:
+            w2[xa] = (total==3)
 
     self.world = not self.world
 

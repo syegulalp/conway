@@ -46,6 +46,8 @@ class MyWindow(pyglet.window.Window):
                             x3 = WIDTH - 1
                         elif x3 > WIDTH - 1:
                             x3 = 0
+                        if x3 == x and y3 == y:
+                            continue
                         self.lookup.append((y3 * WIDTH) + x3)
 
         self.randomize()
@@ -81,16 +83,14 @@ class MyWindow(pyglet.window.Window):
         lookup = self.lookup
         w = self.life[self.world]
         w2 = self.life[not self.world]
+        r = range(0, 8)
 
         for xa in range(0, WIDTH * HEIGHT):
             total = 0
-            for y in range(0, 9):
-                total += 1 if w[lookup[index]] != 0 else 0
+            for y in r:
+                total += w[lookup[index]]
                 index += 1
-            wt = w[xa]
-            if wt != 0:
-                total -= 1
-            w2[xa] = (1 < total < 4) if wt != 0 else (total == 3)
+            w2[xa] = (1 < total < 4) if w[xa] != 0 else (total == 3)
 
         self.world = not self.world
 
@@ -129,6 +129,10 @@ class MyWindow(pyglet.window.Window):
             self.batch.draw()
 
 
-if __name__ == "__main__":
+def main():
     w = MyWindow(1200, 900)
     pyglet.app.run()
+
+
+if __name__ == "__main__":
+    main()
