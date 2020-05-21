@@ -90,7 +90,7 @@ class MyWindow(pyglet.window.Window):
             for y in r:
                 total += w[lookup[index]]
                 index += 1
-            w2[xa] = (1 < total < 4) if w[xa] != 0 else (total == 3)
+            w2[xa] = (1 < total < 4) if w[xa] else (total == 3)
 
         self.world = not self.world
 

@@ -67,10 +67,7 @@ def generation(self)->None:
         for y in range(0,8):
             total += w[lookup[index]]
             index +=1
-        if w[xa]!=0:
-            w2[xa] = (1<total<4)
-        else:
-            w2[xa] = (total==3)
+        w2[xa] = (1<total<4) if w[xa] else (total==3)
 
     self.world = not self.world
 
