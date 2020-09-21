@@ -9,14 +9,14 @@ from timer import Timer
 
 WIDTH = 400
 HEIGHT = 300
+ZOOM = 3
 
 from life import init, render, generation, randomize
-
 
 class MyWindow(pyglet.window.Window):
     def __init__(self, *a, **ka):
         super().__init__(*a, **ka)
-        init()
+        init(WIDTH, HEIGHT)
 
         self.batch = pyglet.graphics.Batch()
         self.texture = pyglet.image.Texture.create(WIDTH, HEIGHT, rectangle=True)
@@ -55,13 +55,13 @@ class MyWindow(pyglet.window.Window):
 
     def on_draw(self):
         with self.draw_timer:
-            pyglet.gl.glViewport(0, 0, 400 * 9, 300 * 9)
+            pyglet.gl.glViewport(0, 0, WIDTH * (ZOOM**2), HEIGHT * (ZOOM**2))
             self.clear()
             self.batch.draw()
 
 
 def main():
-    w = MyWindow(1200, 900)
+    w = MyWindow(WIDTH * ZOOM ,HEIGHT * ZOOM)
     pyglet.app.run()
 
 
