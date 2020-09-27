@@ -7,7 +7,7 @@ from Cython.Build import cythonize
 
 import glob, os
 
-for ff in ('*.c', '*.html','*.pyd'):
+for ff in ('*.c', '*.html'):
     for f in glob.glob(ff):
         try:
             os.remove(f)
