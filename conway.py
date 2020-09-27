@@ -10,7 +10,7 @@ from timer import Timer
 
 WIDTH = 400
 HEIGHT = 300
-
+ZOOM = 3
 
 class MyWindow(pyglet.window.Window):
     def __init__(self, *a, **ka):
@@ -124,7 +124,7 @@ class MyWindow(pyglet.window.Window):
 
     def on_draw(self):
         with self.draw_timer:
-            pyglet.gl.glViewport(0, 0, 400 * 9, 300 * 9)
+            pyglet.gl.glViewport(0, 0, WIDTH * (ZOOM**2), HEIGHT * (ZOOM**2))
             self.clear()
             self.batch.draw()
 

@@ -13,6 +13,7 @@ ZOOM = 3
 
 from life import init, render, generation, randomize
 
+
 class MyWindow(pyglet.window.Window):
     def __init__(self, *a, **ka):
         super().__init__(*a, **ka)
@@ -23,7 +24,12 @@ class MyWindow(pyglet.window.Window):
 
         self.life = [array.array("B", b"\x00" * WIDTH * HEIGHT) for _ in range(2)]
         self.buffer = array.array("B", b"\x00" * WIDTH * HEIGHT * 4)
-        self.sprite = pyglet.sprite.Sprite(self.texture, 0, 0, batch=self.batch,)
+        self.sprite = pyglet.sprite.Sprite(
+            self.texture,
+            0,
+            0,
+            batch=self.batch,
+        )
 
         self.world = 0
 
@@ -53,6 +59,7 @@ class MyWindow(pyglet.window.Window):
             0,
         )
 
+
     def on_draw(self):
         with self.draw_timer:
             pyglet.gl.glViewport(0, 0, WIDTH * (ZOOM**2), HEIGHT * (ZOOM**2))
@@ -61,7 +68,7 @@ class MyWindow(pyglet.window.Window):
 
 
 def main():
-    w = MyWindow(WIDTH * ZOOM ,HEIGHT * ZOOM)
+    w = MyWindow(WIDTH * ZOOM, HEIGHT * ZOOM)
     pyglet.app.run()
 
 
