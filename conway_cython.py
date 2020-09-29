@@ -59,10 +59,9 @@ class MyWindow(pyglet.window.Window):
             0,
         )
 
-
     def on_draw(self):
         with self.draw_timer:
-            pyglet.gl.glViewport(0, 0, WIDTH * (ZOOM**2), HEIGHT * (ZOOM**2))
+            pyglet.gl.glViewport(0, 0, WIDTH * (ZOOM ** 2), HEIGHT * (ZOOM ** 2))
             self.clear()
             self.batch.draw()
 
@@ -70,6 +69,7 @@ class MyWindow(pyglet.window.Window):
 def main():
     w = MyWindow(WIDTH * ZOOM, HEIGHT * ZOOM)
     import gc
+
     gc.freeze()
     pyglet.app.run()
 
