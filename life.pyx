@@ -4,7 +4,7 @@
 # cython: initializedcheck=False
 # cython: cdivision = True
 # cython: always_allow_keywords =False
-# cython: unraisable_tracebacks = True
+# cython: unraisable_tracebacks = False
 # cython: binding = False
 
 from libc.stdlib cimport rand
@@ -64,8 +64,7 @@ def randomize(self)->None:
     s = lookup.size
 
     for x in range(0, s):
-        if rand() % 10 == 1:
-            world[x]=1
+        world[x] = (rand() % 10 == 1)
 
 def generation(self)->None:
 
@@ -84,7 +83,7 @@ def generation(self)->None:
         total = 0
         for y in range(0,8):
             total += w[l[index]]
-            index +=1
+            index += 1
         w2[xa] = (1<total<4) if w[xa] else (total==3)
 
     self.world = not self.world
