@@ -130,7 +130,9 @@ class MyWindow(pyglet.window.Window):
 
 
 def main():
-    w = MyWindow(1200, 900)
+    w = MyWindow(WIDTH * ZOOM, HEIGHT * ZOOM)
+    import gc
+    gc.freeze()
     pyglet.app.run()
 
 

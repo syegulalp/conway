@@ -20,7 +20,7 @@ class MyWindow(pyglet.window.Window):
         init(WIDTH, HEIGHT)
 
         self.batch = pyglet.graphics.Batch()
-        self.texture = pyglet.image.Texture.create(WIDTH, HEIGHT, rectangle=True)
+        self.texture = pyglet.image.Texture.create(WIDTH, HEIGHT)
 
         self.life = [array.array("B", b"\x00" * WIDTH * HEIGHT) for _ in range(2)]
         self.buffer = array.array("B", b"\x00" * WIDTH * HEIGHT * 4)
@@ -69,6 +69,8 @@ class MyWindow(pyglet.window.Window):
 
 def main():
     w = MyWindow(WIDTH * ZOOM, HEIGHT * ZOOM)
+    import gc
+    gc.freeze()
     pyglet.app.run()
 
 
