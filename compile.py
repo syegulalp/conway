@@ -1,4 +1,4 @@
-import sys
+import sys, os
 
 sys.argv = ["compile.py", "build_ext", "--inplace"]
 
@@ -21,5 +21,7 @@ ext_modules = [
         ["life.pyx"],
     )
 ]
+
+os.chdir('src')
 
 setup(name="life", ext_modules=cythonize(ext_modules, annotate=True))

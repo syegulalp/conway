@@ -1,11 +1,13 @@
 .vscode
 env*
+*.ps1
 *.c
 *.pyd
 *.html
-build
+**\build
 *.pyc
 .mypy_cache
 output*.*
 dist
 debug.log
+**\__pycache__
