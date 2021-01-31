@@ -10,4 +10,5 @@ env*
 output*.*
 dist
 debug.log
+tmp
 **\__pycache__
