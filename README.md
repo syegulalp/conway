@@ -1,6 +1,6 @@
 A simple example of Conway's Game Of Life, using Pyglet for visualization and Cython for speed.
 
-Install requirements before doing anything else. A venv is recommended.
+Install requirements before doing anything else. A venv is recommended. Use `python compile.py` to build the extension modules.
 
 The file `conway.py` is the unaccelerated version of Conway's Life.
 
