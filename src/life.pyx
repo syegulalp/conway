@@ -15,19 +15,21 @@ import cython
 
 cdef class MemObj:
     
-    cdef signed int* data
+    cdef signed int* lookupdata
     cdef int height, width, array_size, display_size, size
+    cdef unsigned char[2][4] colors
 
     def __cinit__(self, int width, int height):
+        cdef size_t index = 0
+        cdef signed int y,x,y3,x3,y4
+
         self.height = height
         self.width = width
         self.size = height * width
         self.array_size = self.size * 8
         self.display_size = self.size * 4
-        self.data = <signed int*> PyMem_Malloc(self.array_size * sizeof(signed int))
-
-        cdef size_t index = 0
-        cdef signed int y,x,y3,x3,y4
+        self.lookupdata = <signed int*> PyMem_Malloc(self.array_size * sizeof(signed int))
+        self.colors = [[0,0,0,255],[0,255,0,255]]
 
         for y in range(0,height):
             for x in range(0,width):
@@ -44,64 +46,53 @@ cdef class MemObj:
                             x3=0
                         if x3 == x and y3 == y:
                             continue
-                        self.data[index] = y4 + x3
+                        self.lookupdata[index] = y4 + x3
                         index+=1    
 
+    def randomize(self, game):
+        cdef array.array[unsigned char] _world = game.life[game.world]
+        cdef size_t x
 
-cdef unsigned char[2][4] colors = [[0,0,0,255],[0,255,0,255]]
-cdef MemObj lookup
+        world = _world.data.as_uchars    
 
-def init(int width, int height):
-    global lookup
-    lookup = MemObj(width, height)    
+        for x in range(0, self.size):
+            world[x] = (rand() % 10 == 1)
 
+    def generation(self, game):
 
-def randomize(self)->None:
-    cdef array.array[unsigned char] _world = self.life[self.world]
-    cdef size_t x, s
+        cdef int total, wt, y
+        cdef size_t index = 0, xa, s
+        cdef array.array[unsigned char] _w = game.life[game.world]
+        cdef array.array[unsigned char] _w2 = game.life[1 - game.world]
 
-    world = _world.data.as_uchars    
-    s = lookup.size
+        l = self.lookupdata
+        w = _w.data.as_uchars
+        w2 = _w2.data.as_uchars
 
-    for x in range(0, s):
-        world[x] = (rand() % 10 == 1)
+        for xa in range(0, self.size):
+            total = 0
+            for y in range(0,8):
+                total += w[l[index]]
+                index += 1
+            w2[xa] = (1<total<4) if w[xa] else (total==3)
 
-def generation(self)->None:
-
-    cdef int total, wt, y
-    cdef size_t index = 0, xa, s
-    cdef array.array[unsigned char] _w = self.life[self.world]
-    cdef array.array[unsigned char] _w2 = self.life[1 - self.world]
-
-    l= lookup.data
-    s = lookup.size
-
-    w = _w.data.as_uchars
-    w2 = _w2.data.as_uchars
-
-    for xa in range(0, s):
-        total = 0
-        for y in range(0,8):
-            total += w[l[index]]
-            index += 1
-        w2[xa] = (1<total<4) if w[xa] else (total==3)
-
-    self.world = not self.world
+        game.world = not game.world
 
 
-def render(self)->None:
+    def render(self, game):
 
-    cdef array.array[unsigned char] _world = self.life[self.world]
-    cdef array.array[unsigned char] _imagebuffer = self.buffer
-    cdef size_t j = 0, i, t, s
-    cdef int t1
+        cdef array.array[unsigned char] _world = game.life[game.world]
+        cdef array.array[unsigned char] _imagebuffer = game.buffer
+        cdef size_t j = 0, i, t, s
+        cdef int t1
 
-    world = _world.data.as_uchars
-    imagebuffer = _imagebuffer.data.as_uchars    
-    s = lookup.display_size
+        world = _world.data.as_uchars
+        imagebuffer = _imagebuffer.data.as_uchars    
+        s = self.display_size
 
-    for i in range(0, s, 4):        
-        t1 = world[j]
-        for t in range(0,4):
-            imagebuffer[i+t] = colors[t1][t]
-        j += 1
+        for i in range(0, s, 4):        
+            t1 = world[j]
+            for t in range(0,4):
+                imagebuffer[i+t] = self.colors[t1][t]
+            j += 1
+

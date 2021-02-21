@@ -11,13 +11,13 @@ WIDTH = 400
 HEIGHT = 300
 ZOOM = 3
 
-from life import init, render, generation, randomize
+from life import MemObj
 
 
 class MyWindow(pyglet.window.Window):
     def __init__(self, *a, **ka):
         super().__init__(*a, **ka)
-        init(WIDTH, HEIGHT)
+        self.game_obj = MemObj(WIDTH, HEIGHT)
 
         self.batch = pyglet.graphics.Batch()
         self.texture = pyglet.image.Texture.create(WIDTH, HEIGHT)
@@ -33,7 +33,7 @@ class MyWindow(pyglet.window.Window):
 
         self.world = 0
 
-        randomize(self)
+        self.game_obj.randomize(self)
 
         self.life_timer = Timer()
         self.render_timer = Timer()
@@ -49,9 +49,9 @@ class MyWindow(pyglet.window.Window):
 
     def run(self, *a):
         with self.life_timer:
-            generation(self)
+            self.game_obj.generation(self)
         with self.render_timer:
-            render(self)
+            self.game_obj.render(self)
         self.texture.blit_into(
             pyglet.image.ImageData(WIDTH, HEIGHT, "RGBA", self.buffer.tobytes()),
             0,
