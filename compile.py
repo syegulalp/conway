@@ -19,6 +19,8 @@ ext_modules = [
     Extension(
         "life",
         ["life.pyx"],
+        extra_compile_args = ['/arch:AVX512', '/O2']
+        # /MD for multithread DLL
     )
 ]
 
