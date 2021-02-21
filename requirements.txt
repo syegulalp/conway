@@ -1,2 +1,2 @@
 Cython==3.0a6
-pyglet==1.5.7
+pyglet==2.0.dev1
