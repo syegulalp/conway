@@ -20,7 +20,7 @@ class MyWindow(pyglet.window.Window):
         self.batch = pyglet.graphics.Batch()
         self.texture = pyglet.image.Texture.create(WIDTH, HEIGHT)
 
-        self.life = [array.array("B", b"\x00" * WIDTH * HEIGHT) for _ in range(2)]
+        self.life = [[0 for _ in range( WIDTH * HEIGHT)] for __ in range(2)]
         self.buffer = array.array("B", b"\x00" * WIDTH * HEIGHT * 4)
         self.sprite = pyglet.sprite.Sprite(
             self.texture,
