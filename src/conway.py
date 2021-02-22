@@ -18,7 +18,7 @@ class MyWindow(pyglet.window.Window):
         super().__init__(*a, **ka)
 
         self.batch = pyglet.graphics.Batch()
-        self.texture = pyglet.image.Texture.create(WIDTH, HEIGHT, rectangle=True)
+        self.texture = pyglet.image.Texture.create(WIDTH, HEIGHT)
 
         self.life = [array.array("B", b"\x00" * WIDTH * HEIGHT) for _ in range(2)]
         self.buffer = array.array("B", b"\x00" * WIDTH * HEIGHT * 4)
