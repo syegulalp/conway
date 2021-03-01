@@ -11,13 +11,13 @@ WIDTH = 400
 HEIGHT = 300
 ZOOM = 3
 
-from life import MemObj
+from life import Life
 
 
 class MyWindow(pyglet.window.Window):
     def __init__(self, *a, **ka):
         super().__init__(*a, **ka)
-        self.game_obj = MemObj(WIDTH, HEIGHT)
+        self.game_obj = Life(WIDTH, HEIGHT)
 
         self.batch = pyglet.graphics.Batch()
         self.texture = pyglet.image.Texture.create(WIDTH, HEIGHT)

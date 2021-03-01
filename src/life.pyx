@@ -13,7 +13,7 @@ from cpython.mem cimport PyMem_Malloc
 from cpython cimport array
 import cython
 
-cdef class MemObj:
+cdef class Life:
     
     cdef signed int* lookupdata
     cdef int height, width, array_size, display_size, size
@@ -63,7 +63,7 @@ cdef class MemObj:
         cdef int total, wt, y
         cdef size_t index = 0, xa, s
         cdef array.array[unsigned char] _w = game.life[game.world]
-        cdef array.array[unsigned char] _w2 = game.life[1 - game.world]
+        cdef array.array[unsigned char] _w2 = game.life[not game.world]
 
         l = self.lookupdata
         w = _w.data.as_uchars
