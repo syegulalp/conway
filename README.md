@@ -1,3 +1,5 @@
+**This repo is deprecated. See https://github.com/syegulalp/conway-2022 instead**
+
 A simple example of Conway's Game Of Life, using Pyglet for visualization and Cython for speed.
 
 Install requirements before doing anything else. A venv is recommended. Use `python compile.py` to build the extension modules.
